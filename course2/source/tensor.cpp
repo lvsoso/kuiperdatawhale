@@ -166,6 +166,17 @@ void Tensor<float>::Padding(const std::vector<uint32_t>& pads,
   uint32_t pad_cols2 = pads.at(3);  // right
 
   // 请补充代码
+  arma::fcube new_data(this->data_.n_rows + pad_rows1 + pad_rows2,
+                       this->data_.n_cols + pad_cols1 + pad_cols2,
+                       this->data_.n_slices);
+  new_data.fill(padding_value);
+
+  new_data.subcube(pad_rows1, pad_cols1, 0, new_data.n_rows - pad_rows2 - 1,
+                   new_data.n_cols - pad_cols2 - 1, new_data.n_slices - 1) =
+      this->data_;
+  this->data_ = std::move(new_data);
+  this->raw_shapes_ =
+      std::vector<uint32_t>{this->channels(), this->rows(), this->cols()};
 }
 
 void Tensor<float>::Fill(float value) {
@@ -202,8 +213,11 @@ void Tensor<float>::Show() {
 }
 
 void Tensor<float>::Flatten(bool row_major) {
-  CHECK(!this->data_.empty());
-  // 请补充代码
+    CHECK(!this->data_.empty());
+    CHECK_LE(this->data_.size() ,std::numeric_limits<uint32_t>::max());
+    auto num = uint(this->data_.size());
+    const std::vector<uint32_t>& new_shape = {num};
+    this->Reshape(new_shape, row_major);
 }
 
 void Tensor<float>::Rand() {
