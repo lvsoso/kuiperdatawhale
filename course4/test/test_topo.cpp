@@ -7,10 +7,20 @@
 #include <gtest/gtest.h>
 #include <string>
 
+static const std::string  bin_path_g = "/code/kuiperdatawhale/course4/model_file/resnet18_batch1.pnnx.bin";
+static const std::string param_path_g = "/code/kuiperdatawhale/course4/model_file/resnet18_batch1.param";
+
+static const std::string  simple_ops_bin_path_g = "/code/kuiperdatawhale/course4/model_file/simple_ops.pnnx.bin";
+static const std::string simple_ops_param_path_g = "/code/kuiperdatawhale/course4/model_file/simple_ops.pnnx.param";
+
+static const std::string  simple_ops_2_bin_path_g = "/code/kuiperdatawhale/course4/model_file/simple_ops2.pnnx.bin";
+static const std::string simple_ops_2_param_path_g = "/code/kuiperdatawhale/course4/model_file/simple_ops2.pnnx.param";
+
+
 TEST(test_ir, topo) {
   using namespace kuiper_infer;
-  std::string bin_path("course4/model_file/resnet18_batch1.pnnx.bin");
-  std::string param_path("course4/model_file/resnet18_batch1.param");
+  std::string bin_path(bin_path_g);
+  std::string param_path(param_path_g);
   RuntimeGraph graph(param_path, bin_path);
   const bool init_success = graph.Init();
   ASSERT_EQ(init_success, true);
@@ -27,8 +37,8 @@ TEST(test_ir, topo) {
 
 TEST(test_ir, build_output_ops) {
   using namespace kuiper_infer;
-  std::string bin_path("course4/model_file/simple_ops.pnnx.bin");
-  std::string param_path("course4/model_file/simple_ops.pnnx.param");
+  std::string bin_path(simple_ops_bin_path_g);
+  std::string param_path(simple_ops_param_path_g);
   RuntimeGraph graph(param_path, bin_path);
   const bool init_success = graph.Init();
   ASSERT_EQ(init_success, true);
@@ -44,8 +54,8 @@ TEST(test_ir, build_output_ops) {
 
 TEST(test_ir, build_output_ops2) {
   using namespace kuiper_infer;
-  std::string bin_path("course4/model_file/simple_ops.pnnx.bin");
-  std::string param_path("course4/model_file/simple_ops.pnnx.param");
+  std::string bin_path(simple_ops_bin_path_g);
+  std::string param_path(simple_ops_param_path_g);
   RuntimeGraph graph(param_path, bin_path);
   const bool init_success = graph.Init();
   ASSERT_EQ(init_success, true);
@@ -65,8 +75,8 @@ TEST(test_ir, build_output_ops2) {
 
 TEST(test_ir, build1_status) {
   using namespace kuiper_infer;
-  std::string bin_path("course4/model_file/simple_ops.pnnx.bin");
-  std::string param_path("course4/model_file/simple_ops.pnnx.param");
+  std::string bin_path(simple_ops_bin_path_g);
+  std::string param_path(simple_ops_param_path_g);
   RuntimeGraph graph(param_path, bin_path);
   ASSERT_EQ(int(graph.graph_state()), -2);
   const bool init_success = graph.Init();
@@ -78,8 +88,8 @@ TEST(test_ir, build1_status) {
 
 TEST(test_ir, build1_output_tensors) {
   using namespace kuiper_infer;
-  std::string bin_path("course4/model_file/simple_ops2.pnnx.bin");
-  std::string param_path("course4/model_file/simple_ops2.pnnx.param");
+  std::string bin_path(simple_ops_2_bin_path_g);
+  std::string param_path(simple_ops_2_param_path_g);
   RuntimeGraph graph(param_path, bin_path);
   ASSERT_EQ(int(graph.graph_state()), -2);
   const bool init_success = graph.Init();
@@ -93,7 +103,7 @@ TEST(test_ir, build1_output_tensors) {
     LOG(INFO) << op->name;
     // 打印op输出空间的张量
     const auto &operand = op->output_operands;
-    if (operand->datas.empty()) {
+    if (operand  == nullptr || operand->datas.empty()) {
       continue;
     }
     const uint32_t batch_size = operand->datas.size();
