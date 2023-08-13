@@ -18,13 +18,17 @@ static std::string ShapeStr(const std::vector<int> &shapes) {
   return ss.str();
 }
 
+
+static const std::string  bin_path_g = "/code/kuiperdatawhale/course3/model_file/test_linear.pnnx.bin";
+static const std::string param_path_g = "/code/kuiperdatawhale/course3/model_file/test_linear.pnnx.param";
+
 TEST(test_ir, pnnx_graph_ops) {
   using namespace kuiper_infer;
   /**
    * 如果这里加载失败，请首先考虑相对路径的正确性问题
    */
-  std::string bin_path("course3/model_file/test_linear.pnnx.bin");
-  std::string param_path("course3/model_file/test_linear.pnnx.param");
+  std::string bin_path(bin_path_g);
+  std::string param_path(param_path_g);
   std::unique_ptr<pnnx::Graph> graph = std::make_unique<pnnx::Graph>();
   int load_result = graph->load(param_path, bin_path);
   // 如果这里加载失败，请首先考虑相对路径(bin_path和param_path)的正确性问题
@@ -41,8 +45,8 @@ TEST(test_ir, pnnx_graph_operands) {
   /**
    * 如果这里加载失败，请首先考虑相对路径的正确性问题
    */
-  std::string bin_path("course3/model_file/test_linear.pnnx.bin");
-  std::string param_path("course3/model_file/test_linear.pnnx.param");
+  std::string bin_path(bin_path_g);
+  std::string param_path(param_path_g);
   std::unique_ptr<pnnx::Graph> graph = std::make_unique<pnnx::Graph>();
   int load_result = graph->load(param_path, bin_path);
   // 如果这里加载失败，请首先考虑相对路径(bin_path和param_path)的正确性问题
@@ -72,8 +76,8 @@ TEST(test_ir, pnnx_graph_operands_and_params) {
   /**
    * 如果这里加载失败，请首先考虑相对路径的正确性问题
    */
-  std::string bin_path("course3/model_file/test_linear.pnnx.bin");
-  std::string param_path("course3/model_file/test_linear.pnnx.param");
+  std::string bin_path(bin_path_g);
+  std::string param_path(param_path_g);
   std::unique_ptr<pnnx::Graph> graph = std::make_unique<pnnx::Graph>();
   int load_result = graph->load(param_path, bin_path);
   // 如果这里加载失败，请首先考虑相对路径(bin_path和param_path)的正确性问题
@@ -116,8 +120,8 @@ TEST(test_ir, pnnx_graph_operands_customer_producer) {
   /**
    * 如果这里加载失败，请首先考虑相对路径的正确性问题
    */
-  std::string bin_path("course3/model_file/test_linear.pnnx.bin");
-  std::string param_path("course3/model_file/test_linear.pnnx.param");
+  std::string bin_path(bin_path_g);
+  std::string param_path(param_path_g);
   std::unique_ptr<pnnx::Graph> graph = std::make_unique<pnnx::Graph>();
   int load_result = graph->load(param_path, bin_path);
   // 如果这里加载失败，请首先考虑相对路径(bin_path和param_path)的正确性问题
@@ -140,8 +144,8 @@ TEST(test_ir, pnnx_graph_all) {
   /**
    * 如果这里加载失败，请首先考虑相对路径的正确性问题
    */
-  std::string bin_path("course3/model_file/test_linear.pnnx.bin");
-  std::string param_path("course3/model_file/test_linear.pnnx.param");
+  std::string bin_path(bin_path_g);
+  std::string param_path(param_path_g);
   RuntimeGraph graph(param_path, bin_path);
   const bool init_success = graph.Init();
   ASSERT_EQ(init_success, true);
@@ -174,8 +178,8 @@ TEST(test_ir, pnnx_graph_all_homework) {
   /**
    * 如果这里加载失败，请首先考虑相对路径的正确性问题
    */
-  std::string bin_path("course3/model_file/test_linear.pnnx.bin");
-  std::string param_path("course3/model_file/test_linear.pnnx.param");
+  std::string bin_path(bin_path_g);
+  std::string param_path(param_path_g);
   RuntimeGraph graph(param_path, bin_path);
   const bool init_success = graph.Init();
   ASSERT_EQ(init_success, true);
